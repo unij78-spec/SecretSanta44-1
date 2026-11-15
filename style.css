@@ -1,0 +1,523 @@
+/* ==========================================================
+   Secret Santa — стили
+   Палитра: глубокий бордовый, тёплый крем, немного золота.
+   ========================================================== */
+
+:root {
+  --wine: #5c0f1b;
+  --wine-deep: #3d0911;
+  --red: #7a1224;
+  --cream: #f2eadb;
+  --cream-muted: #e6c88f;          
+  --cream-line: rgba(242, 234, 219, 0.55); 
+  --ink: #2b2a22;
+  --gold: #d4a94e;
+  --needle: #2c5436;
+
+  /* Цвета фоновой картинки bg.jpg */
+  --sky: #4b0a07;
+  --snow: #fdf2de;
+}
+
+/* ---------- Основа ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Noto Serif Armenian", Georgia, serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+svg {
+  display: block;
+}
+
+.script {
+  font-family: "Great Vibes", "Noto Serif Armenian", cursive;
+  font-weight: 400;
+}
+
+.small {
+  margin: 0;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: #eadfc6;
+}
+
+/* Рваный край: рисуется внизу цветного блока */
+.tear {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 14px;
+  fill: var(--cream);
+}
+
+/* Веточка внизу листа */
+.foot {
+  width: 150px;
+  height: 48px;
+  margin: 1.6rem auto 0;
+}
+
+/* ==========================================================
+   Шапка главной страницы (бордовая)
+   ========================================================== */
+
+.hero {
+  position: relative;
+  padding: 0 1rem 3.4rem;
+  overflow: hidden;
+  text-align: center;
+  color: #f6eedb;
+  background: linear-gradient(180deg, var(--wine-deep), var(--wine));
+  --needle: #5b9468;
+}
+
+/* На странице участника шапка не нужна */
+body:has(#result:not([hidden])) .hero {
+  display: none;
+}
+
+.hero h1 {
+  margin: 0.15rem 0 0;
+  font-size: clamp(3.6rem, 18vw, 5.6rem);
+  line-height: 1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.star {
+  margin: 0.6rem 0 0;
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+.corner {
+  position: absolute;
+  top: 58px;
+  width: 120px;
+  height: 38px;
+  opacity: 0.95;
+}
+
+.corner.l {
+  left: -18px;
+  transform: rotate(14deg);
+}
+
+.corner.r {
+  right: -18px;
+  transform: scaleX(-1) rotate(14deg);
+}
+
+/* Гирлянда */
+.lights {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 -6px;
+  padding: 12px 0 0;
+  list-style: none;
+}
+
+.lights::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 12px;
+  height: 2px;
+  background: #2a0710;
+}
+
+.lights li {
+  position: relative;
+  width: 11px;
+  height: 17px;
+  margin-top: 3px;
+  border-radius: 50% 50% 55% 55%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+  animation: twinkle 2.4s ease-in-out infinite;
+}
+
+.lights li:nth-child(even) { margin-top: 11px; }
+.lights li:nth-child(4n+1) { --c: #e23b52; }
+.lights li:nth-child(4n+2) { --c: #f1c75b; animation-delay: 0.6s; }
+.lights li:nth-child(4n+3) { --c: #f6eedb; animation-delay: 1.2s; }
+.lights li:nth-child(4n)   { --c: #5fbf7c; animation-delay: 1.8s; }
+
+@keyframes twinkle {
+  50% { opacity: 0.45; }
+}
+
+/* ==========================================================
+   Экран 1: форма
+   ========================================================== */
+
+.sheet {
+  position: relative;
+  padding: 1.6rem 1.1rem 2.4rem;
+  background: var(--cream);
+}
+
+/* Рамка-леденец */
+.frame {
+  max-width: 30rem;
+  margin: 0 auto;
+  padding: 6px;
+  background: repeating-linear-gradient(135deg, var(--red) 0 10px, var(--cream) 10px 20px);
+}
+
+.inner {
+  padding: 1.6rem 1.3rem 1.8rem;
+  background: var(--cream);
+}
+
+.lead {
+  margin: 0 0 0.6rem;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin: 1.2rem 0 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--wine);
+}
+
+select,
+input {
+  width: 100%;
+  padding: 0.7rem 0.2rem;
+  font: inherit;
+  font-size: 1.05rem;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--wine);
+  border-radius: 0;
+}
+
+input {
+  text-align: center;
+  letter-spacing: 0.45em;
+  text-transform: uppercase;
+}
+
+select:focus,
+input:focus {
+  outline: none;
+  border-bottom-color: var(--gold);
+  background: rgba(92, 15, 27, 0.05);
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin: 1.5rem 0 0;
+  padding: 0.9rem;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f6eedb;
+  background: var(--wine);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:active {
+  background: var(--wine-deep);
+}
+
+button:focus-visible {
+  outline: 3px solid var(--gold);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.6;
+}
+
+.err {
+  min-height: 1.3rem;
+  margin: 0.8rem 0 0;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #9b1c1c;
+}
+
+/* ==========================================================
+   Экран 2: розыгрыш
+   ========================================================== */
+
+#draw {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 62vh;
+  padding: 2rem 1rem;
+  text-align: center;
+  color: #f6eedb;
+  background: var(--wine);
+}
+
+.bow {
+  width: 130px;
+  height: 90px;
+  margin: 0 auto 1rem;
+}
+
+.roll {
+  min-height: 4rem;
+  margin-top: 0.8rem;
+  font-family: "Great Vibes", "Noto Serif Armenian", cursive;
+  font-size: clamp(2rem, 10vw, 3.2rem);
+  color: #f4d98d;
+}
+
+/* ==========================================================
+   Экран 3: карточка участника
+   Фон — картинка bg.jpg: бордовое небо, ёлки и снег внизу.
+   ========================================================== */
+
+/* На компьютере карточка — узкая колонка по центру */
+body:has(#result:not([hidden])) {
+  background: var(--wine-deep);
+}
+
+#result {
+  display: flex;
+  flex-direction: column;
+  max-width: 520px;
+  min-height: 100vh;
+  margin: 0 auto;
+  background: var(--snow);
+}
+
+.letter {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  text-align: center;
+  color: var(--cream);
+  background: var(--sky);
+
+  /* Место под ёлки: контент заканчивается выше них */
+  --trees: min(60vw, 312px);
+  padding-bottom: var(--trees);
+}
+
+/* Картинка прижата к низу и плавно растворяется вверху */
+.letter::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  aspect-ratio: 1200 / 1589;
+  background: url("bg.jpg") center bottom / 100% 100% no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 16%);
+}
+
+/* Затемнение: прячет белые точки картинки там, где лежит текст.
+   Над ёлками плавно исчезает, чтобы они остались яркими. */
+.letter::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 var(--trees) 0;
+  background: linear-gradient(to bottom,
+    rgba(75, 10, 7, 0.9) 0,
+    rgba(75, 10, 7, 0.9) calc(100% - 90px),
+    rgba(75, 10, 7, 0) 100%);
+}
+
+.letter-body {
+  position: relative;
+  z-index: 2;
+  max-width: 32rem;
+  margin: 0 auto;
+  padding: 2rem 1.6rem 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(3.4rem, 17vw, 4.6rem);
+  line-height: 1.1;
+}
+
+/* Линия – бант – линия */
+.ornament {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  margin: 0.6rem 0 1.4rem;
+}
+
+.ornament::before,
+.ornament::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--cream-line);
+}
+
+.ornament svg {
+  width: 62px;
+  height: 38px;
+}
+
+.name {
+  margin: 0.3rem 0 0;
+  font-size: clamp(2.1rem, 10vw, 3.1rem);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* Анкета: подпись, под ней значение, снизу линия */
+.letter dl {
+  margin: 2rem 0 0;
+  text-align: left;
+}
+
+.letter dl div {
+  padding: 0.9rem 0 0.7rem;
+  border-bottom: 1px solid var(--cream-line);
+}
+
+.letter dt {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  color: var(--cream-muted);
+}
+
+.letter dd {
+  margin: 0.2rem 0 0;
+  font-size: 1.15rem;
+}
+
+/* Хобби — контурные плашки, как на макете */
+.tag {
+  display: inline-block;
+  margin: 0.25rem 0.4rem 0.25rem 0;
+  padding: 0.1rem 0.8rem;
+  border: 1.5px solid var(--cream);
+  border-radius: 8px;
+}
+
+/* Строка внизу — на снегу картинки */
+#result .sheet {
+  padding-top: 0.6rem;
+  background: var(--snow);
+}
+
+.note {
+  max-width: 26rem;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #6b6252;
+}
+
+/* ---------- Звёзды: мерцают в небе ---------- */
+
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.sky i {
+  position: absolute;
+  font-style: normal;
+  font-size: var(--size);
+  line-height: 1;
+  color: var(--cream);
+  animation: star 3.4s ease-in-out var(--delay) infinite;
+}
+
+.sky i::before {
+  content: "✦";
+}
+
+@keyframes star {
+  0%, 100% { opacity: 0.15; transform: scale(0.7); }
+  50%      { opacity: 1;    transform: scale(1.15); }
+}
+
+/* ---------- Появление карточки: одно движение сверху вниз ---------- */
+
+.letter-body > *,
+.letter dl div {
+  animation: reveal 0.7s ease-out both;
+}
+
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.letter-body > :nth-child(2) { animation-delay: 0.10s; }
+.letter-body > :nth-child(3) { animation-delay: 0.20s; }
+.letter-body > :nth-child(4) { animation-delay: 0.30s; }
+.letter-body > :nth-child(5) { animation: none; }
+
+.letter dl div:nth-child(1)  { animation-delay: 0.45s; }
+.letter dl div:nth-child(2)  { animation-delay: 0.53s; }
+.letter dl div:nth-child(3)  { animation-delay: 0.61s; }
+.letter dl div:nth-child(4)  { animation-delay: 0.69s; }
+.letter dl div:nth-child(5)  { animation-delay: 0.77s; }
+.letter dl div:nth-child(6)  { animation-delay: 0.85s; }
+.letter dl div:nth-child(7)  { animation-delay: 0.93s; }
+.letter dl div:nth-child(8)  { animation-delay: 1.01s; }
+.letter dl div:nth-child(9)  { animation-delay: 1.09s; }
+.letter dl div:nth-child(10) { animation-delay: 1.17s; }
+.letter dl div:nth-child(11) { animation-delay: 1.25s; }
+
+/* ==========================================================
+   Снег (создаётся в snow.js)
+   ========================================================== */
+
+.snow {
+  position: fixed;
+  top: -12px;
+  z-index: 1; /* ниже текста анкеты (у неё z-index: 2) */
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0.85;
+  pointer-events: none;
+  animation: fall linear infinite;
+}
+
+@keyframes fall {
+  to { transform: translate3d(var(--dx, 20px), 105vh, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .snow,
+  .lights li,
+  .sky i,
+  .letter-body > *,
+  .letter dl div {
+    animation: none;
+  }
+}
